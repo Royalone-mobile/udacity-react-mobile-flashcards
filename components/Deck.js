@@ -13,8 +13,18 @@ class Deck extends Component {
     }
   }
 
+  state = {
+    deck: this.props.navigation.state.params.deck
+  }
+
+  refreshDeck = deck => {
+    this.setState({ deck })
+  }
+
+
   render() {
-    const {deck} = this.props.navigation.state.params;
+    const {deck} = this.state
+    
     return (
       <View style={styles.container}>
         <View>
@@ -22,7 +32,7 @@ class Deck extends Component {
           <Text style={styles.subtitle}>{deck.questions.length} Cards</Text>
         </View>
         <View>
-          <ActionButton onPress={() => this.props.navigation.navigate('AddCard', {deck})}>
+          <ActionButton onPress={() => this.props.navigation.navigate('AddCard', {deck, refreshDeck: this.refreshDeck})}>
             <Text>Add Card</Text>
           </ActionButton>
           {deck.questions.length ? (
