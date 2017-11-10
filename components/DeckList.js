@@ -10,7 +10,7 @@ class DeckList extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Flashcard Decks"
+      title: "Decks"
     }
   }
 
@@ -22,7 +22,7 @@ class DeckList extends Component {
         {Object.keys(this.state.decks).map((key) => {
           return (
             <View style={styles.deck} key={key}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', {deck:key})}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', {deck:this.state.decks[key]})}>
                 <Text style={styles.title}>{ this.state.decks[key].title }</Text>
                 <Text style={styles.subtitle}>{
                   this.state.decks[key].questions.length
