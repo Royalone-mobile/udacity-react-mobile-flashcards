@@ -1,18 +1,19 @@
 import React from 'react'
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { purple, white } from '../utils/colors'
 
-export default function ActionButton ({ children, onPress, style = {} }) {
+export default function ActionButton ({ children, style = {} }) {
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+    <View style={[styles.button]}>
       <Text style={styles.buttonText}>{children}</Text>
-    </TouchableOpacity>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   button: {
     backgroundColor: purple,
+    opacity: 0.5,
     padding: 10,
     margin: 10
   },

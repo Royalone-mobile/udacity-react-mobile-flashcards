@@ -6,7 +6,7 @@ import { Constants } from 'expo'
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
 import Deck from './components/Deck'
-import AddQuestion from './components/AddQuestion'
+import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
 import { white, purple } from './utils/colors'
 
@@ -76,8 +76,8 @@ const MainNavigator = StackNavigator({
       }
     }
   },
-  AddQuestion: {
-    screen: AddQuestion,
+  AddCard: {
+    screen: AddCard,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
