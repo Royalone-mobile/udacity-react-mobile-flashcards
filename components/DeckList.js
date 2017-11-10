@@ -19,18 +19,25 @@ class DeckList extends Component {
 
     return (
       <ScrollView style={styles.container}>
-        {Object.keys(this.state.decks).map((key) => {
-          return (
-            <View style={styles.deck} key={key}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', {deck:this.state.decks[key]})}>
-                <Text style={styles.title}>{ this.state.decks[key].title }</Text>
-                <Text style={styles.subtitle}>{
-                  this.state.decks[key].questions.length
-                } Cards</Text>
-              </TouchableOpacity>
-            </View>
-          )
-        })}
+        { this.state.decks ? (
+          Object.keys(this.state.decks).map((key) => {
+            return (
+              <View style={styles.deck} key={key}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', {deck:this.state.decks[key]})}>
+                  <Text style={styles.title}>{ this.state.decks[key].title }</Text>
+                  <Text style={styles.subtitle}>{
+                    this.state.decks[key].questions.length
+                  } Cards</Text>
+                </TouchableOpacity>
+              </View>
+            )
+          })
+        ) : (
+          <View>
+            <Text style={styles.title}>No decks found</Text>
+          </View>
+        )}
+
 
       </ScrollView>
     )
