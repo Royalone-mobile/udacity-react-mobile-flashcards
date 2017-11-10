@@ -4,7 +4,7 @@ import { purple, white } from '../utils/colors'
 
 export default function ActionButton ({ children, onPress, style = {} }) {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
       <Text style={styles.buttonText}>{children}</Text>
     </TouchableOpacity>
   )
