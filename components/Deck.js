@@ -24,7 +24,7 @@ class Deck extends Component {
 
   render() {
     const {deck} = this.state
-    
+
     return (
       <View style={styles.container}>
         <View>
@@ -36,7 +36,7 @@ class Deck extends Component {
             <Text>Add Card</Text>
           </ActionButton>
           {deck.questions.length ? (
-            <ActionButton onPress={() => this.props.navigation.navigate('Quiz')}>
+            <ActionButton onPress={() => this.props.navigation.navigate('Quiz', {deck})}>
               <Text>Take Quiz</Text>
             </ActionButton>
           ) : (
