@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import { white } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import ActionButton from './ActionButton'
 import TextButton from './TextButton'
 
@@ -48,6 +49,8 @@ class Quiz extends Component {
       this.setState({current, answer: false})
     } else {
       this.setState({complete: true})
+      clearLocalNotification()
+      .then(setLocalNotification)
     }
   }
 
