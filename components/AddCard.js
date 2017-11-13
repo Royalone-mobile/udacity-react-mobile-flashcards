@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity, TextInput } from 'react-native'
-import { white, gray, darkGray } from '../utils/colors'
+import { white, gray, darkGray, textGray } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
 import { addCardToDeck } from '../utils/helpers'
@@ -71,8 +71,8 @@ class AddCard extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.form}>
-          <TextInput placeholder="Question" placeholderColor={darkGray} style={styles.input} onChangeText={(question) => this.updateQuestion( question)} value={this.state.question} />
-          <TextInput placeholder="Answer" placeholderColor={darkGray} style={styles.input} onChangeText={(answer) => this.updateAnswer( answer)} value={this.state.answer} />
+          <TextInput placeholder="Question" placeholderTextColor={textGray} style={styles.input} onChangeText={(question) => this.updateQuestion( question)} value={this.state.question} />
+          <TextInput placeholder="Answer" placeholderTextColor={textGray} style={styles.input} onChangeText={(answer) => this.updateAnswer( answer)} value={this.state.answer} />
           {(this.state.question && this.state.answer) ? (
             <ActionButton onPress={() => this.addCard()}>
               <Text>Add Card</Text>
