@@ -3,7 +3,6 @@ import {View, StatusBar } from 'react-native';
 import { StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
 import DeckList from './components/DeckList'
-import AddDeck from './components/AddDeck'
 import Deck from './components/Deck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
