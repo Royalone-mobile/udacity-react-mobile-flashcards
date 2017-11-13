@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
-import { white } from '../utils/colors'
+import { white, gray, green } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import ActionButton from './ActionButton'
 import TextButton from './TextButton'
@@ -68,21 +68,21 @@ class Quiz extends Component {
 
     return (
       <View style={styles.container}>
-        <View>
-          <Text>{this.state.current+1} / {this.state.count} </Text>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>{this.state.current+1} / {this.state.count} </Text>
         </View>
         { !this.state.complete ? (
-          <View>
+          <View style={{ flex: 1, justifyContent: 'space-between'}}>
             { !this.state.answer ? (
-              <View>
-                <Text style={styles.title}>{card.question}</Text>
+              <View style={styles.card}>
+                <Text style={styles.text}>{card.question}</Text>
                 <TextButton onPress={() => this.showAnswer()}>
                   <Text>Answer</Text>
                 </TextButton>
               </View>
             ) : (
-              <View>
-                <Text style={styles.title}>{card.answer}</Text>
+              <View style={styles.card}>
+                <Text style={styles.text}>{card.answer}</Text>
                 <TextButton onPress={() => this.hideAnswer()}>
                   <Text>Question</Text>
                 </TextButton>
@@ -99,12 +99,19 @@ class Quiz extends Component {
             </View>
           </View>
         ) : (
-          <View>
-            <Text style={styles.title}>Your Score</Text>
-            <Text style={styles.title}>{ this.getScore() }%</Text>
-            <ActionButton onPress={() => this.resetQuiz()}>
-              <Text>Take Again</Text>
-            </ActionButton>
+          <View style={{ flex: 1, justifyContent: 'space-between'}}>
+            <View>
+              <Text style={styles.score}>Your Score</Text>
+              <Text style={styles.score}>{ this.getScore() }%</Text>
+            </View>
+            <View>
+              <ActionButton onPress={() => this.resetQuiz()}>
+                <Text>Restart Quiz</Text>
+              </ActionButton>
+              <ActionButton onPress={() => this.props.navigation.goBack()}>
+                <Text>Back to Deck</Text>
+              </ActionButton>
+            </View>
           </View>
         )}
 
@@ -118,9 +125,16 @@ class Quiz extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-around',
-    backgroundColor: white,
+    justifyContent: 'flex-start',
+    backgroundColor: gray,
     padding: 10
+  },
+  header: {
+    padding: 15,
+  },
+  headerText: {
+    fontSize: 16,
+    textAlign: 'center'
   },
   deck: {
     flex: 1,
@@ -133,10 +147,25 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexShrink: 0
   },
-  title: {
-    fontSize: 48,
+  card: {
+    backgroundColor: white,
+    padding: 10,
+    borderRadius: 5,
+    shadowColor: 'black',
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  },
+  text: {
+    fontSize: 21,
     marginBottom: 15,
     textAlign: 'center'
+  },
+  score: {
+    fontSize: 48,
+    marginBottom: 15,
+    textAlign: 'center',
+    color: green
   },
   subtitle: {
     fontSize: 24,
