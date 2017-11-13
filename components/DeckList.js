@@ -146,6 +146,8 @@ const styles = StyleSheet.create({
     backgroundColor: white,
     padding: 10,
     paddingTop: 18,
-    paddingBottom: 18
+    paddingBottom: 18,
+    borderTopWidth: 1,
+    borderColor: darkGray
   }
 })
