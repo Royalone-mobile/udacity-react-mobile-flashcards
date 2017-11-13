@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { darkBlue, white } from '../utils/colors'
 
 export default function ActionButton ({ children, style = {} }) {
   return (
@@ -12,10 +12,11 @@ export default function ActionButton ({ children, style = {} }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: purple,
+    backgroundColor: darkBlue,
     opacity: 0.5,
-    padding: 10,
-    margin: 10
+    padding: 15,
+    margin: 10,
+    borderRadius: 8
   },
   buttonText: {
     color: white,
