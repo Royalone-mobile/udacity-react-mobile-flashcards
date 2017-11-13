@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity, TextInput } from 'react-native'
-import { white } from '../utils/colors'
+import { white, gray, darkGray, textGray } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
 import { addCardToDeck } from '../utils/helpers'
@@ -70,11 +70,9 @@ class AddCard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.label}>Question</Text>
-          <TextInput style={styles.input} onChangeText={(question) => this.updateQuestion( question)} value={this.state.question} />
-          <Text style={styles.label}>Answer</Text>
-          <TextInput style={styles.input} onChangeText={(answer) => this.updateAnswer( answer)} value={this.state.answer} />
+        <View style={styles.form}>
+          <TextInput placeholder="Question" placeholderTextColor={textGray} style={styles.input} onChangeText={(question) => this.updateQuestion( question)} value={this.state.question} />
+          <TextInput placeholder="Answer" placeholderTextColor={textGray} style={styles.input} onChangeText={(answer) => this.updateAnswer( answer)} value={this.state.answer} />
           {(this.state.question && this.state.answer) ? (
             <ActionButton onPress={() => this.addCard()}>
               <Text>Add Card</Text>
@@ -96,8 +94,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: white,
+    backgroundColor: gray,
     padding: 15
+  },
+  form: {
+    backgroundColor: white,
+    padding: 10,
+    borderRadius: 5,
+    shadowColor: 'black',
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
   },
   label: {
     fontSize: 16,
@@ -105,9 +112,9 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    padding: 5,
+    borderBottomWidth: 1,
+    borderColor: gray,
+    padding: 10,
     marginBottom: 15
   }
 })

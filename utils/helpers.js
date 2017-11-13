@@ -12,8 +12,8 @@ export function getDecks() {
   })
 }
 
-function getDeckKeys() {
-
+export function getDeck(title) {
+  return getDecks().then((decks) => decks[title])
 }
 
 export function saveDeckTitle(title) {
@@ -23,6 +23,16 @@ export function saveDeckTitle(title) {
   }
 
   AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({[title]:deck}))
+}
+
+export function removeDeck(title) {
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+    .then((results) => {
+      const decks = JSON.parse(results)
+      //decks[key] = undefined
+      delete decks[title]
+      AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(decks))
+    })
 }
 
 export function addCardToDeck(deck) {
@@ -72,4 +82,9 @@ export function setLocalNotification () {
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
+}
+
+export function truncateText(text) {
+  const max = 35
+  return (text.length > max ? text.substring(0, max-3) + '...' : text)
 }
