@@ -5,21 +5,20 @@ import { getDecks, saveDeckTitle, removeDeck, truncateText } from '../utils/help
 import { Entypo } from '@expo/vector-icons'
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import DeckListRow from './DeckListRow'
+import TextButton from './TextButton'
 
 class DeckList extends Component {
   state = {
     decks: {}
   }
 
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation, screenProps }) => {
     return {
-      title: "Decks"
+      title: "Decks",
+      headerRight: <TextButton onPress={() => {
+        navigation.setParams({edit: !navigation.state.params.edit })
+      }}>{navigation.state.params.edit ? "Cancel" : "Edit" }</TextButton>
     }
-  }
-
-  onSwipeLeft(gestureState) {
-
-   alert('Swipe')
   }
 
   addDeckToState = (deck) => {
@@ -78,7 +77,8 @@ class DeckList extends Component {
             { this.state.decks ? (
               Object.keys(this.state.decks).map((key) => {
                 return (
-                  <DeckListRow key={key} deck={this.state.decks[key]} navigate={this.props.navigation.navigate} removeDeck={this.removeDeck} />
+                  <DeckListRow key={key} deck={this.state.decks[key]} navigate={this.props.navigation.navigate}
+                  edit={this.props.navigation.state.params.edit} removeDeck={this.removeDeck} />
                 )
               })
             ) : (
