@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
-import { white } from '../utils/colors'
+import { white, gray } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-around',
-    backgroundColor: white,
+    backgroundColor: gray,
     padding: 10
   },
   deck: {
