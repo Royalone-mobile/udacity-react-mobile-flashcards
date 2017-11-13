@@ -11,10 +11,7 @@ class DeckList extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => {
     return {
-      title: "Decks",
-      headerRight: <TextButton onPress={() => {
-        navigation.setParams({edit: !navigation.state.params.edit })
-      }}>{navigation.state.params.edit ? "Cancel" : "Edit" }</TextButton>
+      title: "Decks"
     }
   }
 
@@ -85,7 +82,7 @@ class DeckList extends Component {
               Object.keys(this.state.decks).map((key) => {
                 return (
                   <DeckListRow key={key} deck={this.state.decks[key]} navigate={this.props.navigation.navigate}
-                  edit={this.props.navigation.state.params.edit} removeDeck={this.removeDeck} refreshDecks={this.refreshDecks} />
+                  removeDeck={this.removeDeck} refreshDecks={this.refreshDecks} />
                 )
               })
             ) : (

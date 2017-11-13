@@ -3,12 +3,34 @@ import { View, Text, StyleSheet, TouchableHighlight, ScrollView, Modal, AlertIOS
 import { white, gray, darkBlue, darkGray } from '../utils/colors'
 import { getDecks, saveDeckTitle, truncateText } from '../utils/helpers'
 import { Entypo } from '@expo/vector-icons'
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 
 class DeckList extends Component {
   state = {
     translateX: new Animated.Value(0),
     // translateX: 0,
     edit: false
+  }
+
+  onSwipeLeft(gestureState) {
+    Animated.timing(
+      this.state.translateX,
+      {
+        toValue: -100,
+        duration: 500,
+      }
+    ).start();
+    //this.setState({transform: [{translateX: -100}]})
+  }
+  onSwipeRight(gestureState) {
+    Animated.timing(
+      this.state.translateX,
+      {
+        toValue: 0,
+        duration: 500,
+      }
+    ).start();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -19,7 +41,7 @@ class DeckList extends Component {
           this.state.translateX,
           {
             toValue: -100,
-            duration: 500,
+            duration: 300,
           }
         ).start();
         // this.setState({translateX: -100})
@@ -28,7 +50,7 @@ class DeckList extends Component {
           this.state.translateX,
           {
             toValue: 0,
-            duration: 500,
+            duration: 300,
           }
         ).start();
         // this.setState({translateX: 0})
@@ -39,32 +61,36 @@ class DeckList extends Component {
 
 
   render() {
-    const {deck, navigate, refreshDecks} = this.props
+    const {deck, navigate, removeDeck, refreshDecks} = this.props
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
     };
 
     return (
-      <Animated.View style={{flex: 1, flexDirection: 'row', transform: [{translateX:this.state.translateX}]}}>
-        <TouchableHighlight style={{flex: 1}} underlayColor={darkBlue} onPress={() => navigate('Deck', {deck, refreshDecks})}>
-          <View style={styles.deck}>
-            <Text style={styles.title}>{ truncateText(deck.title) }</Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.count}>{
-                deck.questions.length
-              }</Text>
-              <Entypo name='chevron-small-right' size={24} color={darkGray} />
+      <GestureRecognizer
+        onSwipeLeft={(state) => this.onSwipeLeft(state)}
+        onSwipeRight={(state) => this.onSwipeRight(state)}
+        config={config}>
+        <Animated.View style={{flex: 1, flexDirection: 'row', transform: [{translateX:this.state.translateX}]}}>
+          <TouchableHighlight style={{flex: 1}} underlayColor={darkBlue} onPress={() => navigate('Deck', {deck, refreshDecks})}>
+            <View style={styles.deck}>
+              <Text style={styles.title}>{ truncateText(deck.title) }</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={styles.count}>{
+                  deck.questions.length
+                }</Text>
+                <Entypo name='chevron-small-right' size={24} color={darkGray} />
+              </View>
             </View>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => removeDeck(deck.title)} underlayColor='red' style={{position: 'absolute', backgroundColor: 'red', width: 100, right: -100, padding: 15}}>
-          <View>
-            <Text style={{fontSize: 24, color: white }}>Delete</Text>
-          </View>
-        </TouchableHighlight>
-
-      </Animated.View>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => removeDeck(deck.title)} underlayColor='red' style={{position: 'absolute', backgroundColor: 'red', width: 100, right: -100, padding: 15}}>
+            <View>
+              <Text style={{fontSize: 24, color: white }}>Delete</Text>
+            </View>
+          </TouchableHighlight>
+        </Animated.View>
+      </GestureRecognizer>
     )
   }
 }

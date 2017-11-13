@@ -55,10 +55,6 @@ const MainNavigator = StackNavigator({
       }
     }
   }
-}, {
-  initialRouteParams: {
-    edit: false
-  },
 })
 
 export default class App extends React.Component {
