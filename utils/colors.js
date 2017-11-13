@@ -2,7 +2,7 @@
 
 export const purple = '#292477'
 export const gray = '#eaeaea'
-export const darkGray = '#999'
+export const darkGray = '#aaa'
 export const white = '#fff'
 export const red = '#b71845'
 export const orange = '#f26f28'
