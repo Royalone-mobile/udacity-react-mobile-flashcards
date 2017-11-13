@@ -68,9 +68,9 @@ class Quiz extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>{this.state.current+1} / {this.state.count} </Text>
-        </View>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>{this.state.current+1} / {this.state.count} </Text>
+          </View>
         { !this.state.complete ? (
           <View style={{ flex: 1, justifyContent: 'space-between'}}>
             { !this.state.answer ? (
