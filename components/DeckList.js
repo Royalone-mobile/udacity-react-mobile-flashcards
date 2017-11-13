@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableHighlight, ScrollView, Modal, AlertIOS } from 'react-native'
+import { View, Text, StyleSheet, TouchableHighlight, ScrollView, AlertIOS } from 'react-native'
 import { white, gray, darkBlue, darkGray } from '../utils/colors'
 import { getDecks, saveDeckTitle, removeDeck, truncateText } from '../utils/helpers'
 import { Entypo } from '@expo/vector-icons'
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import DeckListRow from './DeckListRow'
 import TextButton from './TextButton'
 
 class DeckList extends Component {
-  state = {
-    decks: {}
-  }
+
 
   static navigationOptions = ({ navigation, screenProps }) => {
     return {
@@ -19,6 +16,18 @@ class DeckList extends Component {
         navigation.setParams({edit: !navigation.state.params.edit })
       }}>{navigation.state.params.edit ? "Cancel" : "Edit" }</TextButton>
     }
+  }
+
+  state = {
+    decks: {}
+  }
+
+  refreshDecks = () => {
+    getDecks().then((decks) => this.setState({decks}))
+  }
+
+  componentWillMount() {
+    this.refreshDecks()
   }
 
   addDeckToState = (deck) => {
@@ -65,8 +74,6 @@ class DeckList extends Component {
   }
 
   render() {
-    getDecks().then((decks) => this.setState({decks}))
-
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
@@ -78,7 +85,7 @@ class DeckList extends Component {
               Object.keys(this.state.decks).map((key) => {
                 return (
                   <DeckListRow key={key} deck={this.state.decks[key]} navigate={this.props.navigation.navigate}
-                  edit={this.props.navigation.state.params.edit} removeDeck={this.removeDeck} />
+                  edit={this.props.navigation.state.params.edit} removeDeck={this.removeDeck} refreshDecks={this.refreshDecks} />
                 )
               })
             ) : (

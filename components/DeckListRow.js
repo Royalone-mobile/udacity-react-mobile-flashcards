@@ -6,8 +6,8 @@ import { Entypo } from '@expo/vector-icons'
 
 class DeckList extends Component {
   state = {
-    // translateX: new Animated.Value(0),
-    translateX: 0,
+    translateX: new Animated.Value(0),
+    // translateX: 0,
     edit: false
   }
 
@@ -15,23 +15,23 @@ class DeckList extends Component {
     if (nextProps.edit !== this.state.edit) {
       this.setState({edit: nextProps.edit})
       if (nextProps.edit) {
-        // Animated.timing(
-        //   this.state.translateX,
-        //   {
-        //     toValue: -100,
-        //     duration: 650,
-        //   }
-        // ).start();
-        this.setState({translateX: -100})
+        Animated.timing(
+          this.state.translateX,
+          {
+            toValue: -100,
+            duration: 500,
+          }
+        ).start();
+        // this.setState({translateX: -100})
       } else {
-        // Animated.timing(
-        //   this.state.translateX,
-        //   {
-        //     toValue: 0,
-        //     duration: 650,
-        //   }
-        // ).start();
-        this.setState({translateX: 0})
+        Animated.timing(
+          this.state.translateX,
+          {
+            toValue: 0,
+            duration: 500,
+          }
+        ).start();
+        // this.setState({translateX: 0})
       }
     }
   }
@@ -39,7 +39,7 @@ class DeckList extends Component {
 
 
   render() {
-    const {deck, navigate, removeDeck, edit} = this.props
+    const {deck, navigate, refreshDecks} = this.props
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
@@ -47,7 +47,7 @@ class DeckList extends Component {
 
     return (
       <Animated.View style={{flex: 1, flexDirection: 'row', transform: [{translateX:this.state.translateX}]}}>
-        <TouchableHighlight style={{flex: 1}} underlayColor={darkBlue} onPress={() => navigate('Deck', {deck})}>
+        <TouchableHighlight style={{flex: 1}} underlayColor={darkBlue} onPress={() => navigate('Deck', {deck, refreshDecks})}>
           <View style={styles.deck}>
             <Text style={styles.title}>{ truncateText(deck.title) }</Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
