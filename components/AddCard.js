@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { white, gray, darkGray, textGray } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
