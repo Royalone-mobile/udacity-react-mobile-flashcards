@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     margin: 10
   },
   buttonText: {
-    color: white,
     fontSize: 16,
     textAlign: 'center'
   }

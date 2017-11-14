@@ -1,87 +1,79 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
-import { white, gray, darkGray, textGray } from '../utils/colors'
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
+import { white, gray, darkGray, textGray, black } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
 import { addCardToDeck } from '../utils/helpers'
 import { NavigationActions } from 'react-navigation'
+import TextButton from './TextButton'
 
 class AddCard extends Component {
   static navigationOptions = ({ navigation }) => {
+    addCard = () => {
+      const {deck} = navigation.state.params
+
+      deck.questions.push({
+        question: navigation.state.params.question,
+        answer: navigation.state.params.answer
+      })
+
+      addCardToDeck(deck)
+
+      navigation.goBack()
+      navigation.state.params.refreshDeck(deck);
+    }
+
     return {
-      title: "Add Card"
+      title: "New Card",
+      headerRight: <View>{navigation.state.params.question && navigation.state.params.answer ? (
+        <TextButton onPress={() => addCard()}><Text style={styles.white}>Add Card</Text></TextButton>
+      ) : (
+        <Text style={[styles.white, styles.disabled, styles.headerRight]}>Add Card</Text>
+      )}</View>
     }
   }
 
-  state = {
-    deck: {},
-    question: "",
-    answer: ""
-  }
+  // state = {
+  //   deck: {},
+  //   question: "",
+  //   answer: ""
+  // }
 
-  componentWillMount() {
-    const {deck} = this.props.navigation.state.params;
-    this.setState((state) => ({
-      ...state,
-      deck
-    }))
-  }
+  // componentWillMount() {
+  //   const {deck} = this.props.navigation.state.params;
+  //   this.setState((state) => ({
+  //     ...state,
+  //     deck
+  //   }))
+  // }
 
   updateQuestion(question) {
-    this.setState((state) => ({
-      ...state,
-      question
-    }))
+    const {navigation} = this.props
+    navigation.setParams({question})
+
+    // this.setState((state) => ({
+    //   ...state,
+    //   question
+    // }))
   }
 
   updateAnswer(answer) {
-    this.setState((state) => ({
-      ...state,
-      answer
-    }))
+    const {navigation} = this.props
+    navigation.setParams({answer})
+
+    // this.setState((state) => ({
+    //   ...state,
+    //   answer
+    // }))
   }
-
-  addCard() {
-    const {deck} = this.state
-    const questions = deck.questions
-    const {navigation} = this.props;
-
-
-    questions.push({
-      question: this.state.question,
-      answer: this.state.answer
-    })
-
-    this.setState((state) => ({
-      ...state,
-      deck: {
-        ...state.deck,
-        questions
-      }
-    }))
-
-    addCardToDeck(deck)
-
-    navigation.goBack()
-    navigation.state.params.refreshDeck(deck);
-  }
-
 
   render() {
+    const {state} = this.props.navigation
     return (
       <View style={styles.container}>
         <View style={styles.form}>
-          <TextInput placeholder="Question" placeholderTextColor={textGray} style={styles.input} onChangeText={(question) => this.updateQuestion( question)} value={this.state.question} />
-          <TextInput placeholder="Answer" placeholderTextColor={textGray} style={styles.input} onChangeText={(answer) => this.updateAnswer( answer)} value={this.state.answer} />
-          {(this.state.question && this.state.answer) ? (
-            <ActionButton onPress={() => this.addCard()}>
-              <Text>Add Card</Text>
-            </ActionButton>
-          ) : (
-            <DisabledButton>
-              <Text>Add Card</Text>
-            </DisabledButton>
-          )}
+          <TextInput placeholder="Question" autoFocus={true}  placeholderTextColor={textGray} style={styles.input} onChangeText={(question) => this.updateQuestion( question)} value={state.params.question} />
+          <TextInput placeholder="Answer" placeholderTextColor={textGray} style={[styles.input, styles.inputLast]} onChangeText={(answer) => this.updateAnswer( answer)} value={state.params.answer} />
         </View>
       </View>
     )
@@ -95,26 +87,37 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: gray,
-    padding: 15
+    paddingTop: 15
   },
   form: {
     backgroundColor: white,
-    padding: 10,
-    borderRadius: 5,
-    shadowColor: 'black',
+    paddingLeft: 15,
+    shadowColor: black,
     shadowOffset: {width: 1, height: 1},
     shadowOpacity: 0.3,
-    shadowRadius: 3
+    shadowRadius: 0
   },
   label: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 5
   },
   input: {
+    fontSize:14,
     borderBottomWidth: 1,
-    borderColor: gray,
-    padding: 10,
-    marginBottom: 15
+    borderColor: darkGray,
+    paddingTop: 15,
+    paddingBottom: 15
+  },
+  inputLast: {
+    borderBottomWidth: 0
+  },
+  white: {
+    color: white
+  },
+  disabled: {
+    fontSize: 16,
+    opacity: 0.5,
+    paddingRight: 20
   }
 })
