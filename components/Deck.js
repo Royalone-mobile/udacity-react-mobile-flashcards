@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity,  } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { white, gray, textGray, darkBlue } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
-
+import Card from './Card'
 /**
 * TODO: Add Card and Take Quiz buttons should be a tabbar style buttons
 * TODO: Should display the list of cards for this deck, that can be deleted individually.
@@ -27,7 +27,7 @@ class Deck extends Component {
 
   refreshDeck = deck => {
     this.setState({ deck })
-
+    this.props.navigation.setParams({ deck })
     this.props.navigation.state.params.refreshDecks()
   }
 
@@ -37,10 +37,13 @@ class Deck extends Component {
 
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>{deck.title}</Text>
-          <Text style={styles.subtitle}>{deck.questions.length} Cards</Text>
-        </View>
+        <ScrollView style={styles.container}>
+            { deck.questions.map((card, index) => {
+              return (
+                <Card key={deck.title+`-card-`+index} index={index} deck={deck} card={card} refreshDeck={this.refreshDeck} />
+              )
+            })}
+        </ScrollView>
         <View>
           <ActionButton onPress={() => this.props.navigation.navigate('AddCard', {deck, refreshDeck: this.refreshDeck})}>
             <Text>Add Card</Text>
@@ -65,9 +68,7 @@ export default Deck
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-around',
     backgroundColor: white,
-    padding: 10,
     paddingTop: 22
   },
   title: {
