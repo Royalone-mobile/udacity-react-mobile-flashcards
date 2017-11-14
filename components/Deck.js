@@ -48,12 +48,14 @@ class Deck extends Component {
             })}
         </ScrollView>
         <TabBar>
+          {deck.questions.length ? (
           <TouchableHighlight underlayColor='transparent' onPress={() => { this.props.navigation.navigate('Quiz', {deck})}}>
             <Text style={{ color: darkBlue, textAlign: 'right', fontSize: 18}}>Take Quiz</Text>
           </TouchableHighlight>
+          ) : (
+            <Text style={{ color: darkBlue, textAlign: 'right', fontSize: 18, opacity: 0.6}}>Take Quiz</Text>
+          )}
         </TabBar>
-
-
       </View>
     )
   }
