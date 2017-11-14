@@ -6,7 +6,7 @@ import DeckList from './components/DeckList'
 import Deck from './components/Deck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
-import { white, darkBlue} from './utils/colors'
+import { white, darkBlue, black, translucent} from './utils/colors'
 import { setLocalNotification } from './utils/helpers'
 
 function FlashcardsStatusBar ({backgroundColor, ...props}) {
@@ -19,39 +19,39 @@ function FlashcardsStatusBar ({backgroundColor, ...props}) {
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: DeckList,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: darkBlue,
-      }
-    }
+    screen: DeckList
   },
   Deck: {
     screen: Deck,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: darkBlue,
-      }
-    }
   },
   AddCard: {
     screen: AddCard,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: darkBlue,
-      }
-    }
   },
   Quiz: {
     screen: Quiz,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: darkBlue,
-      }
+  }
+}, {
+  navigationOptions: {
+    headerTintColor: darkBlue,
+    headerStyle: {
+      backgroundColor: translucent,
+      height: 35,
+      paddingBottom: 10,
+      margin: 0,
+      position: 'absolute',
+      // backgroundColor: 'transparent',
+      zIndex: 100,
+      top: -10,
+      left: 0,
+      right: 0
+    },
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 18,
+      color: black
+    },
+    headerBackTitleStyle: {
+      color: darkBlue
     }
   }
 })
@@ -64,7 +64,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <FlashcardsStatusBar backgroundColor={darkBlue} barStyle="light-content" />
+        <FlashcardsStatusBar backgroundColor={translucent} barStyle="dark-content" />
         <MainNavigator />
       </View>
     );
