@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
+import HeaderTitle from './HeaderTitle'
 import { white, gray, green, red } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import ActionButton from './ActionButton'
@@ -7,8 +8,10 @@ import TextButton from './TextButton'
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
+    const {deck} = navigation.state.params
+    
     return {
-      title: "Quiz"
+      headerTitle: <HeaderTitle title="Quiz" subtitle={deck.title} />,
     }
   }
 
