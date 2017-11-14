@@ -9,6 +9,10 @@ import { addCardToDeck } from '../utils/helpers'
 import { NavigationActions } from 'react-navigation'
 import TextButton from './TextButton'
 
+/**
+* TODO: Add the ability to add an image
+**/
+
 class AddCard extends Component {
   static navigationOptions = ({ navigation }) => {
     const {deck} = navigation.state.params
@@ -90,7 +94,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: gray,
-    paddingTop: 50
   },
   form: {
 

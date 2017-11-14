@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: white,
-    paddingTop: 22
   },
   msgContainer: {
     flex: 1,

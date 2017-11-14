@@ -35,14 +35,6 @@ const MainNavigator = StackNavigator({
     headerTintColor: textGray,
     headerStyle: {
       backgroundColor: white,
-      height: 35,
-      paddingBottom: 10,
-      margin: 0,
-      position: 'absolute',
-      zIndex: 100,
-      top: -10,
-      left: 0,
-      right: 0,
     },
     headerTitleStyle: {
       fontWeight: 'bold',

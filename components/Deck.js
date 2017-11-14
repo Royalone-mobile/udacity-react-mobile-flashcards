@@ -10,8 +10,9 @@ import Card from './Card'
 import TabBar from './TabBar'
 
 /**
-* TODO: Add Card and Take Quiz buttons should be a tabbar style buttons
-* TODO: Should display the list of cards for this deck, that can be deleted individually.
+* TODO: Fix Cards to say Card if there is only one
+* TODO: Allow the editing of Cards
+* TODO: If the delete button is open, clicking on the row should close it.
 */
 
 class Deck extends Component {
@@ -67,8 +68,7 @@ export default Deck
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: white,
-    paddingTop: 22
+    backgroundColor: white
   },
   title: {
     fontSize: 48,
