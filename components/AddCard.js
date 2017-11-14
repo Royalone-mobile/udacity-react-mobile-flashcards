@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
 import { white, gray, darkGray, textGray, black, darkBlue } from '../utils/colors'
+import HeaderTitle from './HeaderTitle'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
 import { addCardToDeck } from '../utils/helpers'
@@ -9,9 +10,9 @@ import TextButton from './TextButton'
 
 class AddCard extends Component {
   static navigationOptions = ({ navigation }) => {
-    addCard = () => {
-      const {deck} = navigation.state.params
+    const {deck} = navigation.state.params
 
+    addCard = () => {
       deck.questions.push({
         question: navigation.state.params.question,
         answer: navigation.state.params.answer
@@ -24,11 +25,11 @@ class AddCard extends Component {
     }
 
     return {
-      title: "New Card",
+      headerTitle: <HeaderTitle title="New Card" subtitle={deck.title} />,
       headerRight: <View>{navigation.state.params.question && navigation.state.params.answer ? (
-        <TextButton onPress={() => addCard()}><Text style={styles.darkBlue}>Add Card</Text></TextButton>
+        <TextButton onPress={() => addCard()}><Text style={styles.textGray}>Add Card</Text></TextButton>
       ) : (
-        <Text style={[styles.darkBlue, styles.disabled, styles.headerRight]}>Add Card</Text>
+        <Text style={[styles.textGray, styles.disabled, styles.headerRight]}>Add Card</Text>
       )}</View>
     }
   }
