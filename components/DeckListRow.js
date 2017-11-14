@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
     backgroundColor: red,
     width: 100,
     right: -100,
-    paddingTop: 14,
-    paddingBottom: 14,
+    paddingTop: 18,
+    paddingBottom: 18,
     borderBottomWidth: 1,
     borderColor: red,
     margin: 0
