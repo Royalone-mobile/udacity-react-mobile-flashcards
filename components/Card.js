@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableHighlight, ScrollView, Modal, AlertIOS, Animated } from 'react-native'
 import { white, gray, darkBlue, darkGray, black, red, lightGray } from '../utils/colors'
-import { getDecks, saveDeckTitle, truncateText } from '../utils/helpers'
+import { truncateText, addCardToDeck } from '../utils/helpers'
 import { Entypo } from '@expo/vector-icons'
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 
-class DeckListRow extends Component {
+class Card extends Component {
   state = {
     translateX: new Animated.Value(0),
     edit: false,
@@ -33,9 +33,17 @@ class DeckListRow extends Component {
     ).start();
   }
 
+  removeCard = (deck, card) => {
+    deck.questions.splice(card, 1)
+
+    // This function updates the entire deck, so it works to remove cards too
+    addCardToDeck(deck)
+    this.props.refreshDeck(deck)
+  }
+
 
   render() {
-    const {deck, navigate, removeDeck, refreshDecks} = this.props
+    const {card, deck, refreshDeck, index} = this.props
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
@@ -47,34 +55,17 @@ class DeckListRow extends Component {
         onSwipeRight={(state) => this.onSwipeRight(state)}
         config={config}>
         <Animated.View style={{flex: 1, flexDirection: 'row', transform: [{translateX:this.state.translateX}]}}>
-          <TouchableHighlight style={{flex: 1 }} underlayColor='transparent' onShowUnderlay={() => {this.setState({touch: true})}} onHideUnderlay={() => {this.setState({touch: false})}} activeOpacity={1} onPress={() => navigate('Deck', {deck, refreshDecks})}>
-            { this.state.touch ? (
-              <View style={[styles.deck, {backgroundColor: lightGray}]}>
-                <Text style={[styles.title]}>
-                  { truncateText(deck.title) }
-                </Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={[styles.count]}>{
-                    deck.questions.length
-                  }</Text>
-                  <Entypo name='chevron-small-right' size={24} color={black} />
-                </View>
-              </View>
-            ) : (
-              <View style={[styles.deck]}>
-                <Text style={[styles.title]}>
-                  { truncateText(deck.title) }
-                </Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={styles.count}>{
-                    deck.questions.length
-                  }</Text>
-                  <Entypo name='chevron-small-right' size={24} color={darkGray} />
-                </View>
-              </View>
-            )}
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => removeDeck(deck.title)} underlayColor={red} style={styles.deleteBtn}>
+          <View style={{flex: 1}}>
+            <View style={[styles.card]}>
+              <Text style={[styles.title]}>
+                { truncateText(card.question) }
+              </Text>
+              <Text>
+                { truncateText(card.answer) }
+              </Text>
+            </View>
+          </View>
+          <TouchableHighlight onPress={() => this.removeCard(deck, index)} underlayColor={red} style={styles.deleteBtn}>
             <View>
               <Text style={styles.deleteBtnText}>Delete</Text>
             </View>
@@ -90,11 +81,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: gray
   },
-  deck: {
+  card: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     backgroundColor: white,
     borderBottomWidth: 1,
     borderColor: gray,
@@ -118,8 +109,8 @@ const styles = StyleSheet.create({
     backgroundColor: red,
     width: 100,
     right: -100,
-    paddingTop: 18,
-    paddingBottom: 18,
+    paddingTop: 23,
+    paddingBottom: 23,
     borderBottomWidth: 1,
     borderColor: red,
     margin: 0
@@ -139,4 +130,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default DeckListRow
+export default Card

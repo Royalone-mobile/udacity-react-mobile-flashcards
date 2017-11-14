@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
-import { white, gray, green, red } from '../utils/colors'
+import { View, Text, StyleSheet, Platform, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { Feather } from '@expo/vector-icons'
+import HeaderTitle from './HeaderTitle'
+import { white, gray, green, red, darkGray, textGray, black, darkBlue } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import ActionButton from './ActionButton'
 import TextButton from './TextButton'
+import TabBar from './TabBar'
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
+    const {deck} = navigation.state.params
+
     return {
-      title: "Quiz"
+      headerTitle: <HeaderTitle title="Quiz" subtitle={deck.title} />,
     }
   }
 
@@ -28,8 +33,8 @@ class Quiz extends Component {
     this.setState({ questions, count })
   }
 
-  showAnswer() {
-    this.setState({answer: true})
+  toggleAnswer() {
+    this.setState((state) => ({answer: !state.answer}))
   }
 
   hideAnswer() {
@@ -68,50 +73,51 @@ class Quiz extends Component {
 
     return (
       <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>{this.state.current+1} / {this.state.count} </Text>
-          </View>
         { !this.state.complete ? (
-          <View style={{ flex: 1, justifyContent: 'space-between'}}>
-            { !this.state.answer ? (
-              <View style={styles.card}>
-                <Text style={styles.text}>{card.question}</Text>
-                <TextButton onPress={() => this.showAnswer()}>
-                  <Text>Answer</Text>
-                </TextButton>
-              </View>
-            ) : (
-              <View style={styles.card}>
-                <Text style={styles.text}>{card.answer}</Text>
-                <TextButton onPress={() => this.hideAnswer()}>
-                  <Text>Question</Text>
-                </TextButton>
-              </View>
-            )}
-
-            <View>
-              <ActionButton style={{backgroundColor: green}} onPress={() => this.correctAnswer()}>
-                <Text>Correct</Text>
-              </ActionButton>
-              <ActionButton style={{backgroundColor: red}} onPress={() => this.nextQuestion()}>
-                <Text>Incorrect</Text>
-              </ActionButton>
+          <View style={{ flex: 1, justifyContent: 'flex-start'}}>
+            <View style={styles.header}>
+              <Text style={styles.headerText}>Question {this.state.current+1} of {this.state.count} </Text>
             </View>
+
+            <View style={styles.card}>
+              <Text style={styles.question}>{card.question}</Text>
+              { this.state.answer && (
+                <Text style={styles.answer}>{card.answer}</Text>
+              )}
+            </View>
+
+
+            <TabBar style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                <TouchableHighlight underlayColor='transparent' onPress={() => this.nextQuestion()}>
+                  <Feather name='x' size={30} color={red} />
+                </TouchableHighlight>
+                <TouchableHighlight underlayColor='transparent' onPress={() => this.toggleAnswer()}>
+                  { this.state.answer ? (
+                    <Text>Hide Answer</Text>
+                  ) : (
+                    <Text>Show Answer</Text>
+                  )}
+                </TouchableHighlight>
+                <TouchableHighlight underlayColor='transparent' onPress={() => this.correctAnswer()}>
+                  <Feather name='check' size={30} color={green} />
+                </TouchableHighlight>
+            </TabBar>
+
           </View>
         ) : (
           <View style={{ flex: 1, justifyContent: 'space-between'}}>
-            <View>
+            <View style={{flex: 1, backgroundColor: white, paddingTop: 15}}>
               <Text style={styles.score}>Your Score</Text>
               <Text style={styles.score}>{ this.getScore() }%</Text>
             </View>
-            <View>
-              <ActionButton onPress={() => this.resetQuiz()}>
-                <Text>Restart Quiz</Text>
-              </ActionButton>
-              <ActionButton onPress={() => this.props.navigation.goBack()}>
-                <Text>Back to Deck</Text>
-              </ActionButton>
-            </View>
+            <TabBar style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                <TouchableHighlight underlayColor='transparent' onPress={() => this.props.navigation.goBack()}>
+                  <Feather name='chevron-left' size={30} color={textGray} />
+                </TouchableHighlight>
+                <TouchableHighlight underlayColor='transparent' onPress={() => this.resetQuiz()}>
+                  <Feather name='rotate-cw' size={30} color={textGray} />
+                </TouchableHighlight>
+            </TabBar>
           </View>
         )}
 
@@ -126,8 +132,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: gray,
-    padding: 10
+    backgroundColor: gray
   },
   header: {
     padding: 15,
@@ -148,18 +153,37 @@ const styles = StyleSheet.create({
     flexShrink: 0
   },
   card: {
+    flex: 1,
     backgroundColor: white,
-    padding: 10,
-    borderRadius: 5,
-    shadowColor: 'black',
-    shadowOffset: {width: 1, height: 1},
-    shadowOpacity: 0.3,
-    shadowRadius: 3
+    padding: 15,
+    borderTopWidth: 1,
+    borderColor: darkGray,
+    // borderRadius: 8,
+    // shadowColor: 'black',
+    // shadowOffset: {width: 1, height: 1},
+    // shadowOpacity: 0.3,
+    // shadowRadius: 3
   },
+
   text: {
     fontSize: 21,
     marginBottom: 15,
     textAlign: 'center'
+  },
+  answer: {
+    fontSize: 21,
+    fontStyle: 'italic',
+    paddingBottom: 15,
+    textAlign: 'center',
+    color: textGray
+  },
+  question: {
+    fontSize: 21,
+    fontWeight: 'bold',
+    paddingBottom: 15,
+    paddingTop: 15,
+    textAlign: 'center',
+    color: black
   },
   score: {
     fontSize: 48,
