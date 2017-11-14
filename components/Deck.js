@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import { white, gray, textGray, darkBlue } from '../utils/colors'
+import HeaderTitle from './HeaderTitle'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
 import TextButton from './TextButton'
@@ -18,10 +19,7 @@ class Deck extends Component {
     const { deck } = navigation.state.params
 
     return {
-      headerTitle: <View>
-        <Text style={styles.headerTitle}>{deck.title}</Text>
-        <Text style={styles.headerSubtitle}>{deck.questions.length} Cards</Text>
-      </View>,
+      headerTitle: <HeaderTitle title={deck.title} subtitle={`${deck.questions.length} Cards`} />,
       headerRight: <TextButton onPress={() => navigation.navigate('AddCard', {deck, refreshDeck: this.refreshDeck})}><Entypo name='plus' size={30} color={textGray} /></TextButton>
     }
   }
