@@ -74,8 +74,9 @@ class AddCard extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.form}>
+          <Text style={styles.label}>Provide a question and answer</Text>
           <TextInput placeholder="Question" autoFocus={true}  placeholderTextColor={textGray} style={styles.input} onChangeText={(question) => this.updateQuestion( question)} value={state.params.question} />
-          <TextInput placeholder="Answer" placeholderTextColor={textGray} style={[styles.input, styles.inputLast]} onChangeText={(answer) => this.updateAnswer( answer)} value={state.params.answer} />
+          <TextInput placeholder="Answer" placeholderTextColor={textGray} style={[styles.input]} onChangeText={(answer) => this.updateAnswer( answer)} value={state.params.answer} />
         </View>
       </View>
     )
@@ -92,26 +93,21 @@ const styles = StyleSheet.create({
     paddingTop: 50
   },
   form: {
-    backgroundColor: white,
-    paddingLeft: 15,
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderColor: darkGray
+
   },
   label: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 5
+    padding: 15
   },
   input: {
     fontSize:14,
+    backgroundColor: white,
     borderBottomWidth: 1,
+    borderTopWidth: 1,
     borderColor: darkGray,
     paddingTop: 15,
-    paddingBottom: 15
-  },
-  inputLast: {
-    borderBottomWidth: 0
+    paddingBottom: 15,
+    paddingLeft: 15,
+    marginBottom: 15
   },
   white: {
     color: white
