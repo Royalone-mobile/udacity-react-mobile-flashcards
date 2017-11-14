@@ -19,6 +19,8 @@ class Deck extends Component {
 
   refreshDeck = deck => {
     this.setState({ deck })
+
+    this.props.navigation.state.params.refreshDecks()
   }
 
 
