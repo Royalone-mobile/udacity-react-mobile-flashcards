@@ -6,7 +6,7 @@ import DeckList from './components/DeckList'
 import Deck from './components/Deck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
-import { white, darkBlue, black, translucent} from './utils/colors'
+import { white, darkBlue, black, translucent, textGray} from './utils/colors'
 import { setLocalNotification } from './utils/helpers'
 
 function FlashcardsStatusBar ({backgroundColor, ...props}) {
@@ -32,26 +32,26 @@ const MainNavigator = StackNavigator({
   }
 }, {
   navigationOptions: {
-    headerTintColor: darkBlue,
+    headerTintColor: textGray,
     headerStyle: {
-      backgroundColor: translucent,
+      backgroundColor: white,
       height: 35,
       paddingBottom: 10,
       margin: 0,
       position: 'absolute',
-      // backgroundColor: 'transparent',
       zIndex: 100,
       top: -10,
       left: 0,
-      right: 0
+      right: 0,
     },
     headerTitleStyle: {
       fontWeight: 'bold',
       fontSize: 18,
-      color: black
+      color: darkBlue
     },
     headerBackTitleStyle: {
-      color: darkBlue
+      color: textGray,
+      fontWeight: 'normal'
     }
   }
 })
@@ -64,7 +64,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <FlashcardsStatusBar backgroundColor={translucent} barStyle="dark-content" />
+        <FlashcardsStatusBar backgroundColor={white} barStyle="dark-content" />
         <MainNavigator />
       </View>
     );

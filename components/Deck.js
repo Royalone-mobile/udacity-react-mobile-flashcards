@@ -1,15 +1,23 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
-import { white, gray } from '../utils/colors'
+import { View, Text, StyleSheet, TouchableOpacity,  } from 'react-native'
+import { white, gray, textGray, darkBlue } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
+
+/**
+* TODO: Add Card and Take Quiz buttons should be a tabbar style buttons
+* TODO: Should display the list of cards for this deck, that can be deleted individually.
+*/
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
     const { deck } = navigation.state.params
 
     return {
-      title: deck.title
+      headerTitle: <View>
+        <Text style={styles.headerTitle}>{deck.title}</Text>
+        <Text style={styles.headerSubtitle}>{deck.questions.length} Cards</Text>
+      </View>
     }
   }
 
@@ -62,17 +70,6 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 22
   },
-  deck: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: white,
-    borderWidth: 1,
-    borderColor: 'grey',
-    padding: 25,
-    marginTop: 10,
-    marginBottom: 10,
-    flexShrink: 0
-  },
   title: {
     fontSize: 48,
     marginBottom: 15,
@@ -82,6 +79,16 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     color: 'grey'
+  },
+  headerTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: darkBlue,
+    textAlign: 'center'
+  },
+  headerSubtitle: {
+    color: textGray,
+    textAlign: 'center'
   },
   input: {
     borderWidth: 1,

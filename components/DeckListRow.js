@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableHighlight, ScrollView, Modal, AlertIOS, Animated } from 'react-native'
-import { white, gray, darkBlue, darkGray, black, red, fadedBlue } from '../utils/colors'
+import { white, gray, darkBlue, darkGray, black, red, lightGray } from '../utils/colors'
 import { getDecks, saveDeckTitle, truncateText } from '../utils/helpers'
 import { Entypo } from '@expo/vector-icons'
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -47,17 +47,17 @@ class DeckList extends Component {
         onSwipeRight={(state) => this.onSwipeRight(state)}
         config={config}>
         <Animated.View style={{flex: 1, flexDirection: 'row', transform: [{translateX:this.state.translateX}]}}>
-          <TouchableHighlight style={{flex: 1, paddingLeft: 15 }} underlayColor={fadedBlue} onShowUnderlay={() => {this.setState({touch: true})}} onHideUnderlay={() => {this.setState({touch: false})}} activeOpacity={1} onPress={() => navigate('Deck', {deck, refreshDecks})}>
+          <TouchableHighlight style={{flex: 1 }} underlayColor='transparent' onShowUnderlay={() => {this.setState({touch: true})}} onHideUnderlay={() => {this.setState({touch: false})}} activeOpacity={1} onPress={() => navigate('Deck', {deck, refreshDecks})}>
             { this.state.touch ? (
-              <View style={[styles.deck]}>
+              <View style={[styles.deck, {backgroundColor: lightGray}]}>
                 <Text style={[styles.title]}>
                   { truncateText(deck.title) }
                 </Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={[styles.count, {color: white}]}>{
+                  <Text style={[styles.count]}>{
                     deck.questions.length
                   }</Text>
-                  <Entypo name='chevron-small-right' size={24} color={white} />
+                  <Entypo name='chevron-small-right' size={24} color={black} />
                 </View>
               </View>
             ) : (
@@ -99,9 +99,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: white,
     borderBottomWidth: 1,
-    borderColor: darkGray,
-    paddingTop: 10,
-    paddingBottom: 10,
+    borderColor: gray,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 15,
     flexShrink: 0
   },
   title: {

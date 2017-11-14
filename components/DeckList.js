@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   tabBar: {
     flexDirection: 'row',
     alignSelf: 'flex-end',
-    backgroundColor: translucent,
+    backgroundColor: white,
     padding: 10,
     paddingTop: 18,
     paddingBottom: 18,
