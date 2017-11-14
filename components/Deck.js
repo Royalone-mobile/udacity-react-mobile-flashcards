@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
-import { Entypo } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import { white, gray, textGray, darkBlue } from '../utils/colors'
 import HeaderTitle from './HeaderTitle'
 import ActionButton from './ActionButton'
@@ -20,7 +20,8 @@ class Deck extends Component {
 
     return {
       headerTitle: <HeaderTitle title={deck.title} subtitle={`${deck.questions.length} Cards`} />,
-      headerRight: <TextButton onPress={() => navigation.navigate('AddCard', {deck, refreshDeck: this.refreshDeck})}><Entypo name='plus' size={30} color={textGray} /></TextButton>
+      title: "Deck",
+      headerRight: <TextButton onPress={() => navigation.navigate('AddCard', {deck, refreshDeck: this.refreshDeck})}><Feather name='plus' size={30} color={darkBlue} /></TextButton>
     }
   }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
+import { Feather } from '@expo/vector-icons'
 import { white, gray, darkGray, textGray, black, darkBlue } from '../utils/colors'
 import HeaderTitle from './HeaderTitle'
 import ActionButton from './ActionButton'
@@ -27,9 +28,9 @@ class AddCard extends Component {
     return {
       headerTitle: <HeaderTitle title="New Card" subtitle={deck.title} />,
       headerRight: <View>{navigation.state.params.question && navigation.state.params.answer ? (
-        <TextButton onPress={() => addCard()}><Text style={styles.textGray}>Add Card</Text></TextButton>
+        <TextButton onPress={() => addCard()}><Feather name='check' size={30} color={darkBlue} /></TextButton>
       ) : (
-        <Text style={[styles.textGray, styles.disabled, styles.headerRight]}>Add Card</Text>
+        <Text style={[styles.disabled, styles.headerRight]}><Feather name='check' size={30} color={textGray} /></Text>
       )}</View>
     }
   }
