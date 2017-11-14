@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { Entypo } from '@expo/vector-icons'
 import { white, gray, textGray, darkBlue } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
+import TextButton from './TextButton'
 import Card from './Card'
+
 /**
 * TODO: Add Card and Take Quiz buttons should be a tabbar style buttons
 * TODO: Should display the list of cards for this deck, that can be deleted individually.
@@ -17,7 +20,8 @@ class Deck extends Component {
       headerTitle: <View>
         <Text style={styles.headerTitle}>{deck.title}</Text>
         <Text style={styles.headerSubtitle}>{deck.questions.length} Cards</Text>
-      </View>
+      </View>,
+      headerRight: <TextButton onPress={() => navigation.navigate('AddCard', {deck, refreshDeck: this.refreshDeck})}><Entypo name='plus' size={30} color={textGray} /></TextButton>
     }
   }
 
@@ -45,9 +49,6 @@ class Deck extends Component {
             })}
         </ScrollView>
         <View>
-          <ActionButton onPress={() => this.props.navigation.navigate('AddCard', {deck, refreshDeck: this.refreshDeck})}>
-            <Text>Add Card</Text>
-          </ActionButton>
           {deck.questions.length ? (
             <ActionButton onPress={() => this.props.navigation.navigate('Quiz', {deck})}>
               <Text>Take Quiz</Text>
