@@ -5,6 +5,7 @@ import { getDecks, saveDeckTitle, removeDeck, truncateText } from '../utils/help
 import { Entypo } from '@expo/vector-icons'
 import DeckListRow from './DeckListRow'
 import TextButton from './TextButton'
+import TabBar from './TabBar'
 
 class DeckList extends Component {
 
@@ -92,15 +93,11 @@ class DeckList extends Component {
           </View>
         )}
 
-
-
-          <View style={styles.tabBar}>
-            <View style={{flex: 1, justifyContent: 'flex-end'}}>
-              <TouchableHighlight underlayColor='transparent' onPress={() => { this.openAlert()}}>
-                <Text style={{ color: darkBlue, textAlign: 'right', fontSize: 18}}>Add Deck</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
+          <TabBar>
+            <TouchableHighlight underlayColor='transparent' onPress={() => { this.openAlert()}}>
+              <Text style={{ color: darkBlue, textAlign: 'right', fontSize: 18}}>Add Deck</Text>
+            </TouchableHighlight>
+          </TabBar>
         </View>
     )
   }
@@ -124,15 +121,5 @@ const styles = StyleSheet.create({
     color: textGray,
     fontSize: 32,
     textAlign: 'center',
-  },
-  tabBar: {
-    flexDirection: 'row',
-    alignSelf: 'flex-end',
-    backgroundColor: white,
-    padding: 10,
-    paddingTop: 18,
-    paddingBottom: 18,
-    borderTopWidth: 1,
-    borderColor: darkGray
   }
 })
