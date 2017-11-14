@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableHighlight, ScrollView, Modal, AlertIOS, Animated } from 'react-native'
-import { white, gray, darkBlue, darkGray } from '../utils/colors'
+import { white, gray, darkBlue, darkGray, black, red, fadedBlue } from '../utils/colors'
 import { getDecks, saveDeckTitle, truncateText } from '../utils/helpers'
 import { Entypo } from '@expo/vector-icons'
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -9,8 +9,8 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 class DeckList extends Component {
   state = {
     translateX: new Animated.Value(0),
-    // translateX: 0,
-    edit: false
+    edit: false,
+    touch: false
   }
 
   onSwipeLeft(gestureState) {
@@ -18,7 +18,7 @@ class DeckList extends Component {
       this.state.translateX,
       {
         toValue: -100,
-        duration: 500,
+        duration: 200,
       }
     ).start();
     //this.setState({transform: [{translateX: -100}]})
@@ -28,36 +28,10 @@ class DeckList extends Component {
       this.state.translateX,
       {
         toValue: 0,
-        duration: 500,
+        duration: 200,
       }
     ).start();
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.edit !== this.state.edit) {
-      this.setState({edit: nextProps.edit})
-      if (nextProps.edit) {
-        Animated.timing(
-          this.state.translateX,
-          {
-            toValue: -100,
-            duration: 300,
-          }
-        ).start();
-        // this.setState({translateX: -100})
-      } else {
-        Animated.timing(
-          this.state.translateX,
-          {
-            toValue: 0,
-            duration: 300,
-          }
-        ).start();
-        // this.setState({translateX: 0})
-      }
-    }
-  }
-
 
 
   render() {
@@ -73,20 +47,36 @@ class DeckList extends Component {
         onSwipeRight={(state) => this.onSwipeRight(state)}
         config={config}>
         <Animated.View style={{flex: 1, flexDirection: 'row', transform: [{translateX:this.state.translateX}]}}>
-          <TouchableHighlight style={{flex: 1}} underlayColor={darkBlue} onPress={() => navigate('Deck', {deck, refreshDecks})}>
-            <View style={styles.deck}>
-              <Text style={styles.title}>{ truncateText(deck.title) }</Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.count}>{
-                  deck.questions.length
-                }</Text>
-                <Entypo name='chevron-small-right' size={24} color={darkGray} />
+          <TouchableHighlight style={{flex: 1, paddingLeft: 15 }} underlayColor={fadedBlue} onShowUnderlay={() => {this.setState({touch: true})}} onHideUnderlay={() => {this.setState({touch: false})}} activeOpacity={1} onPress={() => navigate('Deck', {deck, refreshDecks})}>
+            { this.state.touch ? (
+              <View style={[styles.deck]}>
+                <Text style={[styles.title]}>
+                  { truncateText(deck.title) }
+                </Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text style={[styles.count, {color: white}]}>{
+                    deck.questions.length
+                  }</Text>
+                  <Entypo name='chevron-small-right' size={24} color={white} />
+                </View>
               </View>
-            </View>
+            ) : (
+              <View style={[styles.deck]}>
+                <Text style={[styles.title]}>
+                  { truncateText(deck.title) }
+                </Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text style={styles.count}>{
+                    deck.questions.length
+                  }</Text>
+                  <Entypo name='chevron-small-right' size={24} color={darkGray} />
+                </View>
+              </View>
+            )}
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => removeDeck(deck.title)} underlayColor='red' style={{position: 'absolute', backgroundColor: 'red', width: 100, right: -100, padding: 15}}>
+          <TouchableHighlight onPress={() => removeDeck(deck.title)} underlayColor={red} style={styles.deleteBtn}>
             <View>
-              <Text style={{fontSize: 24, color: white }}>Delete</Text>
+              <Text style={styles.deleteBtnText}>Delete</Text>
             </View>
           </TouchableHighlight>
         </Animated.View>
@@ -109,29 +99,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: white,
     borderBottomWidth: 1,
-    borderColor: gray,
-    padding: 15,
-    flexShrink: 0,
+    borderColor: darkGray,
+    paddingTop: 10,
+    paddingBottom: 10,
+    flexShrink: 0
   },
   title: {
-    fontSize: 24
-  },
-  modal: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: 150,
-    height: 150,
-    backgroundColor: darkBlue
+    fontSize: 18,
+    color: black
   },
   count: {
-    fontSize: 24,
+    fontSize: 18,
     textAlign: 'right',
-    color: darkGray
+    color: black
+  },
+  deleteBtn: {
+    flex: 1,
+    position: 'absolute',
+    backgroundColor: red,
+    width: 100,
+    right: -100,
+    paddingTop: 14,
+    paddingBottom: 14,
+    borderBottomWidth: 1,
+    borderColor: red,
+    margin: 0
+  },
+  deleteBtnText: {
+    fontSize: 18,
+    color: white,
+    textAlign: 'center'
   },
   tabBar: {
     flexDirection: 'row',

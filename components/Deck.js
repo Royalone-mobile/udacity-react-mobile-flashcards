@@ -58,8 +58,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-around',
-    backgroundColor: gray,
-    padding: 10
+    backgroundColor: white,
+    padding: 10,
+    paddingTop: 22
   },
   deck: {
     flex: 1,

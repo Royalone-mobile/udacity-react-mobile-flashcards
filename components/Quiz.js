@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
-import { white, gray, green } from '../utils/colors'
+import { white, gray, green, red } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import ActionButton from './ActionButton'
 import TextButton from './TextButton'
@@ -90,10 +90,10 @@ class Quiz extends Component {
             )}
 
             <View>
-              <ActionButton onPress={() => this.correctAnswer()}>
+              <ActionButton style={{backgroundColor: green}} onPress={() => this.correctAnswer()}>
                 <Text>Correct</Text>
               </ActionButton>
-              <ActionButton onPress={() => this.nextQuestion()}>
+              <ActionButton style={{backgroundColor: red}} onPress={() => this.nextQuestion()}>
                 <Text>Incorrect</Text>
               </ActionButton>
             </View>

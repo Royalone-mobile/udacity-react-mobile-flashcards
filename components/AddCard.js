@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
-import { white, gray, darkGray, textGray, black } from '../utils/colors'
+import { white, gray, darkGray, textGray, black, darkBlue } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
 import { addCardToDeck } from '../utils/helpers'
@@ -26,9 +26,9 @@ class AddCard extends Component {
     return {
       title: "New Card",
       headerRight: <View>{navigation.state.params.question && navigation.state.params.answer ? (
-        <TextButton onPress={() => addCard()}><Text style={styles.white}>Add Card</Text></TextButton>
+        <TextButton onPress={() => addCard()}><Text style={styles.darkBlue}>Add Card</Text></TextButton>
       ) : (
-        <Text style={[styles.white, styles.disabled, styles.headerRight]}>Add Card</Text>
+        <Text style={[styles.darkBlue, styles.disabled, styles.headerRight]}>Add Card</Text>
       )}</View>
     }
   }
@@ -87,15 +87,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: gray,
-    paddingTop: 15
+    paddingTop: 50
   },
   form: {
     backgroundColor: white,
     paddingLeft: 15,
-    shadowColor: black,
-    shadowOffset: {width: 1, height: 1},
-    shadowOpacity: 0.3,
-    shadowRadius: 0
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderColor: darkGray
   },
   label: {
     fontSize: 14,
@@ -115,9 +114,12 @@ const styles = StyleSheet.create({
   white: {
     color: white
   },
+  darkBlue: {
+    color: darkBlue
+  },
   disabled: {
     fontSize: 16,
-    opacity: 0.5,
+    opacity: 0.6,
     paddingRight: 20
   }
 })
