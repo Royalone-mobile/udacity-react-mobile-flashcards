@@ -6,7 +6,7 @@ import { Entypo } from '@expo/vector-icons'
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 
-class DeckList extends Component {
+class DeckListRow extends Component {
   state = {
     translateX: new Animated.Value(0),
     edit: false,
@@ -85,8 +85,6 @@ class DeckList extends Component {
   }
 }
 
-export default DeckList
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -140,3 +138,5 @@ const styles = StyleSheet.create({
     paddingBottom: 18
   }
 })
+
+export default DeckListRow
