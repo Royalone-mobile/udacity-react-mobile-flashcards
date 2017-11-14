@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import { white, gray, textGray, darkBlue } from '../utils/colors'
 import ActionButton from './ActionButton'
 import DisabledButton from './DisabledButton'
 import TextButton from './TextButton'
 import Card from './Card'
+import TabBar from './TabBar'
 
 /**
 * TODO: Add Card and Take Quiz buttons should be a tabbar style buttons
@@ -48,17 +49,13 @@ class Deck extends Component {
               )
             })}
         </ScrollView>
-        <View>
-          {deck.questions.length ? (
-            <ActionButton onPress={() => this.props.navigation.navigate('Quiz', {deck})}>
-              <Text>Take Quiz</Text>
-            </ActionButton>
-          ) : (
-            <DisabledButton>
-              <Text>Take Quiz</Text>
-            </DisabledButton>
-          )}
-        </View>
+        <TabBar>
+          <TouchableHighlight underlayColor='transparent' onPress={() => { this.props.navigation.navigate('Quiz', {deck})}}>
+            <Text style={{ color: darkBlue, textAlign: 'right', fontSize: 18}}>Take Quiz</Text>
+          </TouchableHighlight>
+        </TabBar>
+
+
       </View>
     )
   }
