@@ -8,14 +8,13 @@ import DisabledButton from './DisabledButton'
 import { addCardToDeck } from '../utils/helpers'
 import { NavigationActions } from 'react-navigation'
 import TextButton from './TextButton'
-
 /**
 * TODO: Add the ability to add an image
 **/
 
 class AddCard extends Component {
   static navigationOptions = ({ navigation }) => {
-    const {deck} = navigation.state.params
+    const {deck, refreshDeck, goBack} = navigation.state.params
 
     addCard = () => {
       deck.questions.push({
@@ -24,9 +23,12 @@ class AddCard extends Component {
       })
 
       addCardToDeck(deck)
+      refreshDeck(deck)
 
-      navigation.goBack()
-      navigation.state.params.refreshDeck(deck);
+      // A delay was introduced to give time for refreshDeck to execute.
+      setTimeout(function() {
+        navigation.goBack()
+      }, 100)
     }
 
     return {
@@ -72,6 +74,11 @@ class AddCard extends Component {
     //   answer
     // }))
   }
+
+  componentDidMount() {
+    this.props.navigation.setParams({goBack: this.props.navigation.goBack})
+  }
+
 
   render() {
     const {state} = this.props.navigation
