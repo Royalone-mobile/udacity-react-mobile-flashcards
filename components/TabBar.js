@@ -5,7 +5,7 @@ import { darkGray, white } from '../utils/colors'
 export default function TabBar ({ children, style = {} }) {
   return (
     <View style={styles.tabBar}>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <View style={[{flex: 1, justifyContent: 'flex-end'}, style]}>
         {children}
       </View>
     </View>
