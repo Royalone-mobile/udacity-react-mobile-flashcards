@@ -36,6 +36,7 @@ class Card extends Component {
   removeCard = (deck, card) => {
     deck.questions.splice(card, 1)
 
+    // This function updates the entire deck, so it works to remove cards too
     addCardToDeck(deck)
     this.props.refreshDeck(deck)
   }
