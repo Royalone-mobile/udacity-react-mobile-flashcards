@@ -13,6 +13,7 @@ import TabBar from './TabBar'
 * TODO: Fix Cards to say Card if there is only one
 * TODO: Allow the editing of Cards
 * TODO: If the delete button is open, clicking on the row should close it.
+* TODO: Only one delete button should be open at a time. 
 */
 
 class Deck extends Component {
