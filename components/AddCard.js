@@ -8,9 +8,6 @@ import DisabledButton from './DisabledButton'
 import { addCardToDeck } from '../utils/helpers'
 import { NavigationActions } from 'react-navigation'
 import TextButton from './TextButton'
-/**
-* TODO: Add the ability to add an image
-**/
 
 class AddCard extends Component {
   static navigationOptions = ({ navigation }) => {
