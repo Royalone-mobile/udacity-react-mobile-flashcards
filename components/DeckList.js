@@ -44,7 +44,7 @@ class DeckList extends Component {
     }
     this.addDeckToState(deck)
     saveDeckTitle(title)
-    this.props.navigation.navigate('Deck', {deck})
+    this.props.navigation.navigate('Deck', {deck, refreshDecks: this.refreshDecks})
   }
 
   removeDeckFromState = (title) => {
