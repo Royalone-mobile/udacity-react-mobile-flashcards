@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
 import DeckList from './components/DeckList'
 import Deck from './components/Deck'
+import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
 import { white, darkBlue, black, translucent, textGray} from './utils/colors'
@@ -30,6 +31,9 @@ function FlashcardsStatusBar ({backgroundColor, ...props}) {
 const MainNavigator = StackNavigator({
   Home: {
     screen: DeckList
+  },
+  AddDeck: {
+    screen: AddDeck,
   },
   Deck: {
     screen: Deck,
