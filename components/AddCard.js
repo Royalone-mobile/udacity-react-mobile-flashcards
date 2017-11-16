@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { white, gray, darkGray, textGray, black, darkBlue } from '../utils/colors'
 import HeaderTitle from './HeaderTitle'
@@ -31,9 +31,19 @@ class AddCard extends Component {
     return {
       headerTitle: <HeaderTitle title="New Card" subtitle={deck.title} />,
       headerRight: <View>{navigation.state.params.question && navigation.state.params.answer ? (
-        <TextButton onPress={() => addCard()}><Feather name='check' size={30} color={darkBlue} /></TextButton>
+        ( Platform.OS === 'ios') ? (
+          <TextButton onPress={() => addCard()}><Feather name='check' size={30} color={darkBlue} /></TextButton>
+        ) : (
+          <TextButton onPress={() => addCard()}><Feather name='check' size={30} color={white} /></TextButton>
+        )
+
       ) : (
-        <Text style={[styles.disabled, styles.headerRight]}><Feather name='check' size={30} color={textGray} /></Text>
+        ( Platform.OS === 'ios') ? (
+          <Text style={[styles.disabled, styles.headerRight]}><Feather name='check' size={30} color={textGray} /></Text>
+        ) : (
+          <Text style={[styles.disabled, styles.headerRight]}><Feather name='check' size={30} color={white} /></Text>
+        )
+
       )}</View>
     }
   }
@@ -97,24 +107,53 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: gray,
+    ...Platform.select({
+      ios: {
+        backgroundColor: gray,
+      },
+      android: {
+        backgroundColor: white,
+        padding: 15
+      }
+    })
+
   },
   form: {
 
   },
   label: {
-    padding: 15
+    ...Platform.select({
+      ios: {
+        padding: 15
+      },
+      android: {
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 5,
+      }
+    })
   },
   input: {
-    fontSize:14,
-    backgroundColor: white,
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderColor: darkGray,
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 15,
-    marginBottom: 15
+    ...Platform.select({
+      ios: {
+        fontSize:14,
+        backgroundColor: white,
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderColor: darkGray,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 15,
+        marginBottom: 15
+      },
+      android: {
+        fontSize: 16,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 5,
+        marginBottom: 15,
+      }
+    })
   },
   white: {
     color: white

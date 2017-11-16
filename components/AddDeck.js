@@ -5,6 +5,12 @@ import { white } from '../utils/colors'
 import { saveDeckTitle, getDeck } from '../utils/helpers'
 
 class AddDeck extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "New Deck",
+    }
+  }
+
   state = {
     title: ""
   }
@@ -20,11 +26,10 @@ class AddDeck extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="position" style={styles.container}>
-        <Text style={styles.title}>What is the title of your new deck?</Text>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <Text style={styles.title}>Title</Text>
         <TextInput style={styles.input} onChangeText={(title) => this.setState({ title })} value={this.state.title} />
-        <ActionButton onPress={this.addDeck}>
-          <Text>Create Deck</Text>
+        <ActionButton onPress={this.addDeck} text="CREATE DECK">
         </ActionButton>
       </KeyboardAvoidingView>
     )
@@ -35,17 +40,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: white,
-    justifyContent: 'center',
-    padding: 10
+    padding: 15
   },
-  title: {
-    fontSize: 48,
-    marginBottom: 25,
-    textAlign: 'center'
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    textAlign: 'left'
   },
   input: {
-    borderWidth: 1,
-    borderColor: 'black',
     padding: 5
   }
 })

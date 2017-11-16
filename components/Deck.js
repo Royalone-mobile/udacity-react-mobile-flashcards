@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView, Platform } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { white, gray, textGray, darkBlue } from '../utils/colors'
 import HeaderTitle from './HeaderTitle'
@@ -17,7 +17,15 @@ class Deck extends Component {
     return {
       headerTitle: <HeaderTitle title={deck.title} subtitle={`${deck.questions.length} Cards`} />,
       title: "Deck",
-      headerRight: <TextButton onPress={() => navigate('AddCard', {deck, refreshDeck})}><Feather name='plus' size={30} color={darkBlue} /></TextButton>
+      ...Platform.select({
+        ios: {
+          headerRight: <TextButton onPress={() => navigate('AddCard', {deck, refreshDeck})}><Feather name='plus' size={30} color={darkBlue} /></TextButton>
+        },
+        android: {
+          headerRight: <TextButton onPress={() => navigate('AddCard', {deck, refreshDeck})}><Feather name='plus' size={30} color={white} /></TextButton>
+        }
+      })
+
     }
   }
 
