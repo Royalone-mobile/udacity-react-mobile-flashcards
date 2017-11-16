@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableHighlight, ScrollView, Modal, AlertIOS, Animated } from 'react-native'
-import { white, gray, darkBlue, darkGray, black, red, lightGray } from '../utils/colors'
+import { View, Text, StyleSheet, TouchableHighlight, ScrollView, Modal, AlertIOS, Animated, Platform } from 'react-native'
+import { white, gray, darkBlue, darkGray, black, red, lightGray, textGray } from '../utils/colors'
 import { truncateText, addCardToDeck } from '../utils/helpers'
-import { Entypo } from '@expo/vector-icons'
+import { Entypo, MaterialIcons } from '@expo/vector-icons'
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 
@@ -49,30 +49,60 @@ class Card extends Component {
       directionalOffsetThreshold: 80
     };
 
+    if (Platform.OS === 'ios') {
+      return (
+        <GestureRecognizer
+          onSwipeLeft={(state) => this.onSwipeLeft(state)}
+          onSwipeRight={(state) => this.onSwipeRight(state)}
+          config={config}>
+          <Animated.View style={{flex: 1, flexDirection: 'row', transform: [{translateX:this.state.translateX}]}}>
+            <View style={styles.card}>
+              <View style={[styles.qa]}>
+                <Text style={[styles.title]}>
+                  { truncateText(card.question) }
+                </Text>
+                <Text>
+                  { truncateText(card.answer) }
+                </Text>
+              </View>
+            </View>
+            <TouchableHighlight onPress={() => this.removeCard(deck, index)} underlayColor={red} style={styles.deleteBtn}>
+              <View>
+                <Text style={styles.deleteBtnText}>Delete</Text>
+              </View>
+            </TouchableHighlight>
+          </Animated.View>
+        </GestureRecognizer>
+      )
+    }
+
     return (
       <GestureRecognizer
         onSwipeLeft={(state) => this.onSwipeLeft(state)}
         onSwipeRight={(state) => this.onSwipeRight(state)}
         config={config}>
-        <Animated.View style={{flex: 1, flexDirection: 'row', transform: [{translateX:this.state.translateX}]}}>
-          <View style={{flex: 1}}>
-            <View style={[styles.card]}>
-              <Text style={[styles.title]}>
-                { truncateText(card.question) }
-              </Text>
-              <Text>
-                { truncateText(card.answer) }
-              </Text>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <Animated.View style={[styles.animated, {transform: [{translateX:this.state.translateX}]}]}>
+            <View style={styles.card}>
+              <View style={[styles.qa]}>
+                <Text style={[styles.title]}>
+                  { truncateText(card.question) }
+                </Text>
+                <Text>
+                  { truncateText(card.answer) }
+                </Text>
+              </View>
             </View>
-          </View>
+          </Animated.View>
           <TouchableHighlight onPress={() => this.removeCard(deck, index)} underlayColor={red} style={styles.deleteBtn}>
             <View>
               <Text style={styles.deleteBtnText}>Delete</Text>
             </View>
           </TouchableHighlight>
-        </Animated.View>
+        </View>
       </GestureRecognizer>
     )
+
   }
 }
 
@@ -81,18 +111,47 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: gray
   },
+  animated: {
+    flex: 1,
+    flexDirection: 'row',
+    zIndex: 1,
+  },
   card: {
+    ...Platform.select({
+      ios: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: white,
+        borderBottomWidth: 1,
+        borderColor: gray,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 15,
+        flexShrink: 0
+      },
+      android: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: white,
+        borderBottomWidth: 1,
+        borderColor: gray,
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft: 15,
+        flexShrink: 0
+      }
+    })
+  },
+  qa: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: white,
-    borderBottomWidth: 1,
-    borderColor: gray,
-    paddingTop: 15,
-    paddingBottom: 15,
     paddingLeft: 15,
-    flexShrink: 0
   },
   title: {
     fontSize: 18,
@@ -113,7 +172,15 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
     borderBottomWidth: 1,
     borderColor: red,
-    margin: 0
+    margin: 0,
+
+    ...Platform.select({
+      android: {
+        right: 0,
+        paddingTop: 28,
+        paddingBottom: 28,
+      }
+    })
   },
   deleteBtnText: {
     fontSize: 18,

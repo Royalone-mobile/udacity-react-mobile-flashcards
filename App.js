@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, StatusBar } from 'react-native';
+import {View, StatusBar, Platform } from 'react-native';
 import { StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
 import DeckList from './components/DeckList'
 import Deck from './components/Deck'
+import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
-import { white, darkBlue, black, translucent, textGray} from './utils/colors'
+import { white, darkBlue, lightGray, black, translucent, textGray} from './utils/colors'
 import { setLocalNotification } from './utils/helpers'
 
 /**
@@ -31,6 +32,9 @@ const MainNavigator = StackNavigator({
   Home: {
     screen: DeckList
   },
+  AddDeck: {
+    screen: AddDeck,
+  },
   Deck: {
     screen: Deck,
   },
@@ -42,18 +46,54 @@ const MainNavigator = StackNavigator({
   }
 }, {
   navigationOptions: {
-    headerTintColor: textGray,
+    ...Platform.select({
+      ios: {
+        headerTintColor: textGray,
+      },
+      android: {
+        headerTintColor: white,
+      }
+    }),
+
     headerStyle: {
-      backgroundColor: white,
+      ...Platform.select({
+        ios: {
+          backgroundColor: white,
+          borderBottomWidth: 1,
+          borderColor: lightGray
+        },
+        android: {
+          backgroundColor: darkBlue,
+          height: 75
+        }
+      })
     },
     headerTitleStyle: {
-      fontWeight: 'bold',
-      fontSize: 18,
-      color: darkBlue
+      ...Platform.select({
+        ios: {
+          fontSize: 18,
+          fontWeight: 'bold',
+          color: darkBlue
+        },
+        android: {
+          fontSize: 21,
+          fontWeight: 'normal',
+          color: white,
+        },
+      }),
     },
     headerBackTitleStyle: {
-      color: textGray,
-      fontWeight: 'normal'
+      ...Platform.select({
+        ios: {
+          color: textGray,
+          fontWeight: 'normal'
+        },
+        android: {
+          color: white,
+          fontWeight: 'normal'
+        }
+      })
+
     }
   }
 })
@@ -66,7 +106,12 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <FlashcardsStatusBar backgroundColor={white} barStyle="dark-content" />
+        { (Platform.OS === 'ios') ? (
+          <FlashcardsStatusBar backgroundColor={white} barStyle="dark-content" />
+        ) : (
+          <FlashcardsStatusBar backgroundColor={darkBlue} barStyle="light-content" />
+        )}
+
         <MainNavigator />
       </View>
     );

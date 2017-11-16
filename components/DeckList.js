@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableHighlight, ScrollView, AlertIOS } from 'react-native'
+import { View, Text, StyleSheet, TouchableHighlight, ScrollView, AlertIOS, Platform } from 'react-native'
+import { Feather } from '@expo/vector-icons'
 import { white, gray, darkBlue, darkGray, translucent, textGray } from '../utils/colors'
 import { getDecks, saveDeckTitle, removeDeck, truncateText } from '../utils/helpers'
 import { Entypo } from '@expo/vector-icons'
@@ -12,7 +13,12 @@ class DeckList extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => {
     return {
-      title: "Decks"
+      title: "Decks",
+      ...Platform.select({
+        android: {
+          headerRight: <TextButton onPress={() => navigation.state.params.newDeck()}><Feather name='plus' size={30} color={white} /></TextButton>
+        }
+      })
     }
   }
 
@@ -26,6 +32,7 @@ class DeckList extends Component {
 
   componentWillMount() {
     this.refreshDecks()
+    this.props.navigation.setParams({newDeck: this.newDeck})
   }
 
   addDeckToState = (deck) => {
@@ -63,6 +70,14 @@ class DeckList extends Component {
     removeDeck(title)
   }
 
+  newDeck = () => {
+      if (Platform.OS === 'ios') {
+          this.openAlert()
+      } else {
+          this.openView()
+      }
+  }
+
   openAlert = () => {
     AlertIOS.prompt(
       'Enter new deck title',
@@ -70,6 +85,11 @@ class DeckList extends Component {
       text => this.addDeck(text)
     )
   }
+
+  openView = () => {
+      this.props.navigation.navigate('AddDeck', {refreshDecks: this.refreshDecks})
+  }
+
 
   render() {
     const config = {
@@ -92,12 +112,14 @@ class DeckList extends Component {
             <Text style={styles.msg}>No Decks</Text>
           </View>
         )}
+          { Platform.OS === 'ios' && (
+            <TabBar>
+              <TouchableHighlight underlayColor='transparent' onPress={() => { this.newDeck()}}>
+                <Text style={{ color: darkBlue, textAlign: 'right', fontSize: 18}}>Add Deck</Text>
+              </TouchableHighlight>
+            </TabBar>
+          )}
 
-          <TabBar>
-            <TouchableHighlight underlayColor='transparent' onPress={() => { this.openAlert()}}>
-              <Text style={{ color: darkBlue, textAlign: 'right', fontSize: 18}}>Add Deck</Text>
-            </TouchableHighlight>
-          </TabBar>
         </View>
     )
   }
