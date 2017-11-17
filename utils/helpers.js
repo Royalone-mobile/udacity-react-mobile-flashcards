@@ -4,11 +4,81 @@ import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector
 import { Notifications, Permissions } from 'expo'
 
 const FLASHCARDS_STORAGE_KEY = 'Flashcards:decks'
+const FLASHCARDS_USER_KEY = 'Flashcards:users'
 const NOTIFICATION_KEY = 'Flashcards:notifications'
+
+const defaultDecks = {
+  French: {
+    title: "French",
+    questions: [
+      {
+        question: "Bonjour",
+        answer: "Hello"
+      },
+      {
+        question: "Merci",
+        answer: "Thanks"
+      },
+      {
+        question: "Bonne nuit",
+        answer: "Goodnight"
+      },
+      {
+        question: "Où se trouvent les toilettes?",
+        answer: "Where is the bathroom?"
+      },
+      {
+        question: "Je t'aime",
+        answer: "I love you"
+      }
+    ]
+  },
+  React: {
+    title: "React",
+    questions: [
+      {
+        question: "What React function allows you to render the content to be displayed?",
+        answer: "render()"
+      }
+    ]
+  }
+}
+
+
+export function initApp() {
+  return AsyncStorage.getItem(FLASHCARDS_USER_KEY).then((result) => {
+    if (!result) {
+      return createUser('User')
+    } else {
+      return getDecks()
+    }
+  })
+}
+
+function setDefaultDecks() {
+  AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(defaultDecks))
+}
+
+function createUser(name) {
+  const user = {
+    name: name,
+    history: []
+  }
+
+  return AsyncStorage.setItem(FLASHCARDS_USER_KEY, JSON.stringify({[name]: user}))
+    .then(() => {
+      return AsyncStorage.getItem(FLASHCARDS_USER_KEY)
+        .then((result) => {
+          setDefaultDecks()
+          return getDecks()
+        })
+    })
+}
+
 
 export function getDecks() {
   return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then( (result) => {
-    return JSON.parse(result)
+      return JSON.parse(result)
   })
 }
 

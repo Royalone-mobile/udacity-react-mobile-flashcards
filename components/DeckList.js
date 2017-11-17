@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableHighlight, ScrollView, AlertIOS, Platform } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { white, gray, darkBlue, darkGray, translucent, textGray } from '../utils/colors'
-import { getDecks, saveDeckTitle, removeDeck, truncateText } from '../utils/helpers'
+import { initApp, getDecks, saveDeckTitle, removeDeck, truncateText } from '../utils/helpers'
 import { Entypo } from '@expo/vector-icons'
 import DeckListRow from './DeckListRow'
 import TextButton from './TextButton'
 import TabBar from './TabBar'
 
 class DeckList extends Component {
-
-
   static navigationOptions = ({ navigation, screenProps }) => {
     return {
       title: "Decks",
@@ -31,7 +29,11 @@ class DeckList extends Component {
   }
 
   componentWillMount() {
-    this.refreshDecks()
+    initApp().then((decks) => this.setState({decks}))
+  }
+
+  componentDidMount() {
+    //this.refreshDecks()
     this.props.navigation.setParams({newDeck: this.newDeck})
   }
 

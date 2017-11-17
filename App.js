@@ -8,7 +8,7 @@ import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
 import { white, darkBlue, lightGray, black, translucent, textGray} from './utils/colors'
-import { setLocalNotification } from './utils/helpers'
+import { initApp, setLocalNotification } from './utils/helpers'
 
 /**
 * BUG: An error occurs when the first question of a new deck is
@@ -99,7 +99,8 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
-  componentDidMount() {
+
+  componentWillMount() {
     setLocalNotification()
   }
 
