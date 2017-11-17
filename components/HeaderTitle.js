@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { darkBlue, textGray } from '../utils/colors'
+import { View, Text, StyleSheet, Platform } from 'react-native'
+import { darkBlue, textGray, white } from '../utils/colors'
 import { truncateText } from '../utils/helpers'
 
 export default function HeaderTitle ({ title, subtitle }) {
@@ -16,11 +16,26 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: darkBlue,
-    textAlign: 'center'
+    textAlign: 'center',
+    ...Platform.select({
+      ios: {
+        color: darkBlue,
+      },
+      android: {
+        color: white,
+      }
+    })
+
   },
   headerSubtitle: {
-    color: textGray,
-    textAlign: 'center'
+    textAlign: 'center',
+    ...Platform.select({
+      ios: {
+        color: textGray,
+      },
+      android: {
+        color: white,
+      }
+    })
   }
 })

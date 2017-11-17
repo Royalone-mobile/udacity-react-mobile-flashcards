@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, Platform } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import HeaderTitle from './HeaderTitle'
 import { white, gray, green, red, darkGray, textGray, black, darkBlue } from '../utils/colors'
@@ -132,7 +132,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: gray
+    ...Platform.select({
+      ios: {
+        backgroundColor: gray,
+      },
+      android: {
+        backgroundColor: white,
+      }
+    })
   },
   header: {
     padding: 15,

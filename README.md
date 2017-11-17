@@ -1,11 +1,9 @@
 # Mobile Flashcards By Michael Eisenbraun
 
 ## What is Mobile Flashcards
-
-Mobile Flashcards is a mobile app, specifically designed for iOS, for creating digital flashcards and was designed and developed using React Native. This project was created as part of the Udacity React Native course.
+Mobile Flashcards is a mobile app for creating digital flashcards and was designed and developed using React Native. This project was created as part of the Udacity React Native course.
 
 This project was built using the Create React Native App and [Expo](https://expo.io/). It also uses [React Navigation](https://github.com/react-community/react-navigation) and [React Native Swipe Gestures](https://github.com/glepur/react-native-swipe-gestures).
-
 
 ## Installation
 
@@ -19,8 +17,16 @@ In a terminal window, navigate to the project and execute the following commands
 
 After the server has started, hit `i` to run it through the iOS emulator or `q` to display a QR code to view the app on your iPhone through the Expo App.
 
+### Supported Platforms
+While Mobile Flashcards should work on all iOS and Android devices, it has been official tested of the following:
+    - iPhone SE (device) running iOS 11.1
+    - iPhone 7 Plus (emulator) running iOS 10.3
+    - Pixel XL (emulator) running Oreo
+
 ## Getting Started
 The Mobile Flashcards app is a basic digital flashcard system. You can create decks and cards. Decks are a collection of cards. A card consists of a single question and answer.
+
+When you launch the app for the first time, demo decks will be created for you, so you have something to play around with. You may delete them if you wish. 
 
 ### Creating a Deck
 When the app first loads you will be presented with the Decks screen which will display a list of all of your Decks. If this is your first time using the app, you should be see the message "No Decks".
